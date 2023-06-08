@@ -98,7 +98,11 @@ function record_data(e) {
     var oldHeader = sheet.getRange(1, 1, 1, sheet.getLastColumn()).getValues()[0];
     var newHeader = oldHeader.slice();
     var fieldsFromForm = getDataColumns(e.parameters);
-    var row = [new Date()]; // first element in the row should always be a timestamp
+    var currentDate = new Date();
+    var utc = currentDate.getTime() + (currentDate.getTimezoneOffset() * 60 * 1000);
+    var KR_TIME_DIFF = 9 * 60 * 60 * 1000;
+    var kr_curr = new Date(utc + (KR_TIME_DIFF));
+    var row = [kr_curr]; // first element in the row should always be a timestamp
     
     // loop through the header columns
     for (var i = 1; i < oldHeader.length; i++) { // start at 1 to avoid Timestamp column
